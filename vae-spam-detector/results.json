@@ -1,0 +1,66 @@
+{
+  "dataset": {
+    "total_messages": 5574,
+    "ham_messages": 4827,
+    "spam_messages": 747,
+    "ham_percent": 86.6,
+    "spam_percent": 13.4
+  },
+  "threshold_percentile": 95.0,
+  "threshold_value": 0.0010162319522351027,
+  "mean_error_ratio_spam_over_ham": 1.02,
+  "metrics": [
+    {
+      "name": "Ham-only VAE",
+      "accuracy": 0.5755983654407473,
+      "precision": 0.5666666666666667,
+      "recall": 0.11378848728246319,
+      "f1": 0.189520624303233,
+      "roc_auc": 0.635763897550173,
+      "ham_false_positive_rate": 0.06728778467908902,
+      "spam_recall": 0.11378848728246319
+    },
+    {
+      "name": "Ham-only autoencoder",
+      "accuracy": 0.5791009924109749,
+      "precision": 0.58125,
+      "recall": 0.12449799196787148,
+      "f1": 0.20507166482910694,
+      "roc_auc": 0.6396663257585206,
+      "ham_false_positive_rate": 0.06935817805383022,
+      "spam_recall": 0.12449799196787148
+    },
+    {
+      "name": "Logistic regression (supervised)",
+      "accuracy": 0.9229422066549913,
+      "precision": 0.9951690821256038,
+      "recall": 0.8273092369477911,
+      "f1": 0.9035087719298246,
+      "roc_auc": 0.9894768861505373,
+      "ham_false_positive_rate": 0.003105590062111801,
+      "spam_recall": 0.8273092369477911
+    }
+  ],
+  "examples": [
+    {
+      "label": "SPAM",
+      "error": 0.0010688976617529988,
+      "text": "PRIVATE! Your 2003 Account Statement for 07808247860 shows 800 un-redeem..."
+    },
+    {
+      "label": "SPAM",
+      "error": 0.0010548955760896206,
+      "text": "URGENT!: Your Mobile No. was awarded a \u00a32,000 Bonus Caller Prize on 02/0..."
+    },
+    {
+      "label": "HAM",
+      "error": 8.71619977260707e-06,
+      "text": "No management puzzeles."
+    },
+    {
+      "label": "HAM",
+      "error": 1.0553138963587116e-05,
+      "text": "Received, understood n acted upon!"
+    }
+  ]
+}
