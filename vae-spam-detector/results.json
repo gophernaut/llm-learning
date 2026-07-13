@@ -6,61 +6,117 @@
     "ham_percent": 86.6,
     "spam_percent": 13.4
   },
-  "threshold_percentile": 95.0,
-  "threshold_value": 0.0010162319522351027,
-  "mean_error_ratio_spam_over_ham": 1.02,
+  "threshold_selection": "PURE MAX F1 (no FPR cap)",
+  "feature_mode": "embeddings",
+  "embedding_model": "all-mpnet-base-v2",
+  "vae_threshold": 2.3310296535491943,
+  "ae_threshold": 2.5227444171905518,
+  "pure_max_f1_mode": true,
+  "mean_error_ratio_spam_over_ham": 207.22,
+  "architecture_sweep": [
+    {
+      "hidden": 512,
+      "latent": 128,
+      "vae_f1": 0.8692,
+      "vae_recall": 0.7943,
+      "vae_fpr": 0.0207,
+      "ae_f1": 0.8638,
+      "ae_recall": 0.7793,
+      "ae_fpr": 0.0155
+    },
+    {
+      "hidden": 768,
+      "latent": 256,
+      "vae_f1": 0.882,
+      "vae_recall": 0.8311,
+      "vae_fpr": 0.0331,
+      "ae_f1": 0.8763,
+      "ae_recall": 0.7993,
+      "ae_fpr": 0.0155
+    },
+    {
+      "hidden": 512,
+      "latent": 64,
+      "vae_f1": 0.8654,
+      "vae_recall": 0.7793,
+      "vae_fpr": 0.0135,
+      "ae_f1": 0.8726,
+      "ae_recall": 0.8077,
+      "ae_fpr": 0.0269
+    },
+    {
+      "hidden": 384,
+      "latent": 128,
+      "vae_f1": 0.8784,
+      "vae_recall": 0.8094,
+      "vae_fpr": 0.0207,
+      "ae_f1": 0.8848,
+      "ae_recall": 0.8411,
+      "ae_fpr": 0.0373
+    },
+    {
+      "hidden": 256,
+      "latent": 32,
+      "vae_f1": 0.8883,
+      "vae_recall": 0.8311,
+      "vae_fpr": 0.0248,
+      "ae_f1": 0.8748,
+      "ae_recall": 0.7943,
+      "ae_fpr": 0.0135
+    }
+  ],
   "metrics": [
     {
       "name": "Ham-only VAE",
-      "accuracy": 0.5755983654407473,
-      "precision": 0.5666666666666667,
-      "recall": 0.11378848728246319,
-      "f1": 0.189520624303233,
-      "roc_auc": 0.635763897550173,
-      "ham_false_positive_rate": 0.06728778467908902,
-      "spam_recall": 0.11378848728246319
+      "accuracy": 0.9104859335038363,
+      "precision": 0.9635627530364372,
+      "recall": 0.7959866220735786,
+      "f1": 0.8717948717948718,
+      "roc_auc": 0.9583705519433308,
+      "ham_false_positive_rate": 0.018633540372670808,
+      "spam_recall": 0.7959866220735786
     },
     {
       "name": "Ham-only autoencoder",
-      "accuracy": 0.5791009924109749,
-      "precision": 0.58125,
-      "recall": 0.12449799196787148,
-      "f1": 0.20507166482910694,
-      "roc_auc": 0.6396663257585206,
-      "ham_false_positive_rate": 0.06935817805383022,
-      "spam_recall": 0.12449799196787148
+      "accuracy": 0.9053708439897699,
+      "precision": 0.9746835443037974,
+      "recall": 0.7725752508361204,
+      "f1": 0.8619402985074627,
+      "roc_auc": 0.9611593510459294,
+      "ham_false_positive_rate": 0.012422360248447204,
+      "spam_recall": 0.7725752508361204
     },
     {
       "name": "Logistic regression (supervised)",
-      "accuracy": 0.9229422066549913,
-      "precision": 0.9951690821256038,
-      "recall": 0.8273092369477911,
-      "f1": 0.9035087719298246,
-      "roc_auc": 0.9894768861505373,
-      "ham_false_positive_rate": 0.003105590062111801,
-      "spam_recall": 0.8273092369477911
+      "accuracy": 0.9987212276214834,
+      "precision": 0.9966666666666667,
+      "recall": 1.0,
+      "f1": 0.998330550918197,
+      "roc_auc": 1.0,
+      "ham_false_positive_rate": 0.002070393374741201,
+      "spam_recall": 1.0
     }
   ],
   "examples": [
     {
       "label": "SPAM",
-      "error": 0.0010688976617529988,
-      "text": "PRIVATE! Your 2003 Account Statement for 07808247860 shows 800 un-redeem..."
+      "error": 33.62556457519531,
+      "text": "+449071512431 URGENT! This is the 2nd attempt to contact U!U have WON \u00a31..."
     },
     {
       "label": "SPAM",
-      "error": 0.0010548955760896206,
-      "text": "URGENT!: Your Mobile No. was awarded a \u00a32,000 Bonus Caller Prize on 02/0..."
+      "error": 32.367305755615234,
+      "text": "PRIVATE! Your 2003 Account Statement for 07808247860 shows 800 un-redeem..."
     },
     {
       "label": "HAM",
-      "error": 8.71619977260707e-06,
-      "text": "No management puzzeles."
+      "error": -3.4185051918029785,
+      "text": "Sorry, I'll call later"
     },
     {
       "label": "HAM",
-      "error": 1.0553138963587116e-05,
-      "text": "Received, understood n acted upon!"
+      "error": -3.255338668823242,
+      "text": "I cant pick the phone right now. Pls send a message"
     }
   ]
 }
