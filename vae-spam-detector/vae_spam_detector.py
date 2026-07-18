@@ -801,7 +801,8 @@ def main() -> None:
     X_ham_val_t = torch.tensor(X_ham_val, dtype=torch.float32)
     X_test_t = torch.tensor(X_test, dtype=torch.float32)
     if FEATURE_MODE == "embeddings":
-        # For embeddings, pure recon error works better than adding KL
+        # For embeddings we currently use pure reconstruction error.
+        # (Adding the KL term in anomaly_score didn't improve results in our tests.)
         vae_val_raw = vae.reconstruction_error(X_ham_val_t, n_samples=4)
         vae_test_raw = vae.reconstruction_error(X_test_t, n_samples=4)
     else:
