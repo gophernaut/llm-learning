@@ -28,6 +28,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from sklearn.decomposition import PCA
 import torch
 import torch.nn as nn
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -41,6 +42,7 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader, TensorDataset
+import matplotlib.pyplot as plt
 import re
 
 # Optional: sentence embeddings
@@ -300,9 +302,33 @@ class VAE(nn.Module):
         log_var = self.fc_log_var(hidden)
         z = self.reparameterize(mu, log_var)
         return self.decoder(z), mu, log_var
+    
+    @torch.no_grad()
+    def get_anomaly_components(self, x: torch.Tensor, n_samples: int = 8) -> tuple[np.ndarray, np.ndarray]:
+        """Returns (reconstruction_error, kl_divergence) separately for independent scaling."""
+        self.eval()
+        recon_scores = []
+        kl_scores = []
+        
+        for _ in range(n_samples):
+            recon, mu, log_var = self.forward(x)
+            
+            # 1. Raw Reconstruction Error (MSE)
+            recon_err = torch.mean((x - recon) ** 2, dim=1)
+            
+            # 2. Raw KL Divergence
+            kl_err = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp(), dim=1)
+            
+            recon_scores.append(recon_err)
+            kl_scores.append(kl_err)
+            
+        mean_recon = torch.stack(recon_scores).mean(dim=0).cpu().numpy()
+        mean_kl = torch.stack(kl_scores).mean(dim=0).cpu().numpy()
+        
+        return mean_recon, mean_kl
 
     @torch.no_grad()
-    def reconstruction_error(self, x: torch.Tensor, n_samples: int = 1) -> np.ndarray:
+    def reconstruction_error_mse(self, x: torch.Tensor, n_samples: int = 1) -> np.ndarray:
         """MSE reconstruction error per sample (anomaly score).
 
         For VAE, averaging a few stochastic reconstructions (n_samples>1)
@@ -320,6 +346,21 @@ class VAE(nn.Module):
             recon, _, _ = self.forward(x)
             e = torch.mean((x - recon) ** 2, dim=1)
             errors.append(e)
+        mean_error = torch.stack(errors).mean(dim=0)
+        return mean_error.cpu().numpy()
+    
+    @torch.no_grad()
+    def reconstruction_error_cosine(self, x: torch.Tensor, n_samples: int = 1) -> np.ndarray:
+        self.eval()
+        errors = []
+        for _ in range(n_samples):
+            recon, _, _ = self.forward(x)
+            # Cosine distance: 1 - cosine_similarity
+            # dim=1 computes similarity across the feature dimension
+            sim = torch.nn.functional.cosine_similarity(x, recon, dim=1)
+            e = 1.0 - sim
+            errors.append(e)
+        
         mean_error = torch.stack(errors).mean(dim=0)
         return mean_error.cpu().numpy()
 
@@ -530,14 +571,6 @@ def reconstruction_errors(model: nn.Module, data: np.ndarray) -> np.ndarray:
         errors.append(batch_errors)
     return np.concatenate(errors)
 
-
-def select_threshold(errors_ham: np.ndarray, percentile: float = THRESHOLD_PERCENTILE) -> float:
-    """Choose threshold as a high percentile of ham reconstruction errors."""
-    threshold = float(np.percentile(errors_ham, percentile))
-    print(f"[INFO] Anomaly threshold ({percentile}th pct of ham errors): {threshold:.6f}")
-    return threshold
-
-
 def find_best_threshold(
     scores: np.ndarray,
     y_true: np.ndarray,
@@ -687,59 +720,84 @@ def pick_examples(
             break
     return examples
 
+def visualize_bottleneck(vae, X_test, y_test, latent_dim):
+    print("\n[INFO] Generating PCA visualization for the VAE bottleneck vs Raw Features...")
 
-def _get_anomaly_scores(model, X, n_samples=4):
-    """Helper to get scores, preferring recon for embeddings."""
-    if hasattr(model, "reconstruction_error"):
-        return model.reconstruction_error(torch.tensor(X, dtype=torch.float32), n_samples=n_samples)
-    return reconstruction_errors(model, X)
+    # 1. Extract the latent representations (mu) from the trained VAE
+    vae.eval()
+    with torch.no_grad():
+        X_test_t = torch.tensor(X_test, dtype=torch.float32)
+        _, mu, _ = vae(X_test_t)
+        z_mean = mu.cpu().numpy()
 
+    # 2. Run PCA to reduce both Raw Features and Latent Bottleneck to 2D
+    pca_raw = PCA(n_components=2)
+    x_2d = pca_raw.fit_transform(X_test)
 
-def evaluate_config(model_class, name_prefix, input_dim, h, l, use_sigmoid, recon_loss_type, beta,
-                    X_ham_tr, X_ham_val, X_test, X_dev, y_dev, is_pure_f1):
-    """Train a model with given hidden/latent and return its metrics dict + error ratio info."""
-    print(f"  [CONFIG] {name_prefix} h={h} l={l}")
-    model = model_class(input_dim=input_dim, hidden_dim=h, latent_dim=l, use_sigmoid=use_sigmoid)
-    train_model(model, X_ham_tr, val_data=X_ham_val, epochs=60, beta=beta, recon_loss_type=recon_loss_type)
+    pca_vae = PCA(n_components=2)
+    z_2d = pca_vae.fit_transform(z_mean)
 
-    val_raw = _get_anomaly_scores(model, X_ham_val)
-    test_raw = _get_anomaly_scores(model, X_test)
+    # 3. Plot them side-by-side
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    # z-score using val
-    m, s = float(val_raw.mean()), float(val_raw.std() + 1e-9)
-    val_scores = (val_raw - m) / s
-    test_scores = (test_raw - m) / s
+    ham_mask = (y_test == 0)
+    spam_mask = (y_test == 1)
 
-    # dev scores for threshold
-    dev_raw = _get_anomaly_scores(model, X_dev)
-    dev_scores = (dev_raw - m) / s
+    # Plot A: Raw Features
+    axes[0].scatter(x_2d[ham_mask, 0], x_2d[ham_mask, 1], alpha=0.5, label='Ham', c='blue', s=15)
+    axes[0].scatter(x_2d[spam_mask, 0], x_2d[spam_mask, 1], alpha=0.5, label='Spam', c='red', s=15)
+    axes[0].set_title(f'Raw Features + PCA ({FEATURE_MODE})')
+    axes[0].legend()
 
-    if is_pure_f1:
-        thresh = find_best_threshold(dev_scores, y_dev, target="f1", max_fpr=None)
-    else:
-        mb = 0.15 if FEATURE_MODE == "embeddings" else 0.10
-        thresh = find_best_threshold(dev_scores, y_dev, target="f1", max_fpr=mb)
+    # Plot B: VAE Bottleneck
+    axes[1].scatter(z_2d[ham_mask, 0], z_2d[ham_mask, 1], alpha=0.5, label='Ham', c='blue', s=15)
+    axes[1].scatter(z_2d[spam_mask, 0], z_2d[spam_mask, 1], alpha=0.5, label='Spam', c='red', s=15)
+    axes[1].set_title(f'VAE Bottleneck + PCA (Latent Dim: {latent_dim})')
+    axes[1].legend()
 
-    mets = anomaly_metrics(f"{name_prefix} (h={h},l={l})", np.concatenate([np.zeros(len(X_ham_val)), np.ones(len(X_spam_dev)) ]), dev_scores, thresh)  # temp, better use test
-    # actually compute on test
-    test_mets = anomaly_metrics(f"{name_prefix} (h={h},l={l})", 
-                                np.concatenate([np.zeros(len(X_test)//2), np.ones(len(X_test)//2)]),  # approx, but use real
-                                test_scores, thresh)
-    # fix y_test for this
-    # since we have global y_test later, we'll recompute outside for main
+    plt.tight_layout()
+    plt.savefig("bottleneck_pca.png")
+    print("[INFO] Saved PCA plot to bottleneck_pca.png")
 
-    ham_test_err = test_scores[:len(X_ham_test)] if 'X_ham_test' in locals() else test_scores[:len(X_test)//2]
-    spam_test_err = test_scores[len(X_ham_test):] if 'X_ham_test' in locals() else test_scores[len(X_test)//2:]
-    ratio = float(spam_test_err.mean() / (ham_test_err.mean() + 1e-9)) if len(ham_test_err)>0 else 0
-
-    return {
-        "hidden": h,
-        "latent": l,
-        "threshold": thresh,
-        "test_scores": test_scores,
-        "ratio": ratio,
-    }
-
+def explain_anomaly(vae: torch.nn.Module, x_sample: np.ndarray, text_sample: str):
+    """
+    Passes a single normalized spam sample through the VAE and 
+    ranks which handcrafted features triggered the anomaly alarm.
+    """
+    feature_names = [
+        "length", "num_words", "digit_count", "upper_count", 
+        "special_count", "exclam_count", "money_count", 
+        "has_url", "has_phone", "digit_ratio", 
+        "upper_ratio", "special_ratio"
+    ]
+    num_custom = len(feature_names)
+    
+    vae.eval()
+    with torch.no_grad():
+        # Ensure shape is (1, input_dim)
+        x_t = torch.tensor(x_sample, dtype=torch.float32)
+        if x_t.dim() == 1:
+            x_t = x_t.unsqueeze(0)
+            
+        # Get reconstruction from the VAE
+        recon, _, _ = vae(x_t)
+        
+        # Calculate squared error PER FEATURE (no mean/sum reduction)
+        # Shape: (input_dim,)
+        feature_errors = ((x_t - recon) ** 2).squeeze().numpy()
+    
+    # Isolate the handcrafted features (the last 12 columns)
+    handcrafted_errors = feature_errors[-num_custom:]
+    
+    # Pair with names and sort descending
+    breakdown = list(zip(feature_names, handcrafted_errors))
+    breakdown.sort(key=lambda x: x[1], reverse=True)
+    
+    print(f"Message: {text_sample}")
+    print("-" * 50)
+    print("Highest Error Handcrafted Features:")
+    for name, err in breakdown[:5]:
+        print(f" - {name:15s} | MSE: {err:.4f}")
 
 def main() -> None:
     torch.manual_seed(RANDOM_STATE)
@@ -801,21 +859,54 @@ def main() -> None:
     X_ham_val_t = torch.tensor(X_ham_val, dtype=torch.float32)
     X_test_t = torch.tensor(X_test, dtype=torch.float32)
     if FEATURE_MODE == "embeddings":
-        # For embeddings we currently use pure reconstruction error.
-        # (Adding the KL term in anomaly_score didn't improve results in our tests.)
-        vae_val_raw = vae.reconstruction_error(X_ham_val_t, n_samples=4)
-        vae_test_raw = vae.reconstruction_error(X_test_t, n_samples=4)
+        # === NEW: Independent Z-Score Normalization for VAE ===
+        print("\n[INFO] Extracting separate anomaly components (Recon + KL)...")
+        
+        # 1. Get raw components for the validation set (Ham only)
+        val_recon_raw, val_kl_raw = vae.get_anomaly_components(X_ham_val_t, n_samples=8)
+        
+        # 2. Fit Z-score statistics on the Ham validation data
+        recon_mean, recon_std = float(val_recon_raw.mean()), float(val_recon_raw.std() + 1e-9)
+        kl_mean, kl_std = float(val_kl_raw.mean()), float(val_kl_raw.std() + 1e-9)
+
+        def get_z_combined_score(X_np: np.ndarray, alpha: float = 1.0) -> np.ndarray:
+                """Standardizes Recon and KL independently, then sums them."""
+                X_t = torch.tensor(X_np, dtype=torch.float32)
+                recon_raw, kl_raw = vae.get_anomaly_components(X_t, n_samples=8)
+                
+                # Standardize using the validation statistics
+                z_recon = (recon_raw - recon_mean) / recon_std
+                z_kl = (kl_raw - kl_mean) / kl_std
+                
+                # Combine (alpha acts as a weighting factor, 1.0 means equal weight)
+                return z_recon + (alpha * z_kl)
+            
+        alpha = 1.0 
+        
+        vae_val_scores = get_z_combined_score(X_ham_val, alpha)
+        test_scores_vae = get_z_combined_score(X_test, alpha)
+        vae_dev_scores = get_z_combined_score(X_dev, alpha)
     else:
         vae_val_raw = vae.anomaly_score(X_ham_val_t, n_samples=8, beta=2.0)
         vae_test_raw = vae.anomaly_score(X_test_t, n_samples=8, beta=2.0)
 
+        # Z-score relative to ham validation distribution (helps stability + threshold choice)
+        vae_mean, vae_std = float(vae_val_raw.mean()), float(vae_val_raw.std() + 1e-9)
+        vae_val_scores = (vae_val_raw - vae_mean) / vae_std
+        test_scores_vae = (vae_test_raw - vae_mean) / vae_std
+
+
+    spam_test_errors = test_scores_vae[len(X_ham_test):]
+    worst_spam_idx = np.argmax(spam_test_errors)
+    print("\n[INFO] Breaking down the highest-scoring Spam anomaly:")
+    explain_anomaly(
+        vae, 
+        X_spam_test[worst_spam_idx], 
+        texts[spam_test_idx[worst_spam_idx]]
+    )
+    
     ae_val_raw = reconstruction_errors(ae, X_ham_val)
     ae_test_raw = reconstruction_errors(ae, X_test)
-
-    # Z-score relative to ham validation distribution (helps stability + threshold choice)
-    vae_mean, vae_std = float(vae_val_raw.mean()), float(vae_val_raw.std() + 1e-9)
-    vae_val_scores = (vae_val_raw - vae_mean) / vae_std
-    test_scores_vae = (vae_test_raw - vae_mean) / vae_std
 
     ae_mean, ae_std = float(ae_val_raw.mean()), float(ae_val_raw.std() + 1e-9)
     ae_val_scores = (ae_val_raw - ae_mean) / ae_std
@@ -828,10 +919,10 @@ def main() -> None:
 
     # Apply same z-score normalization for dev set
     if FEATURE_MODE == "embeddings":
-        vae_dev_raw = vae.reconstruction_error(torch.tensor(X_dev, dtype=torch.float32), n_samples=4)
+        vae_dev_raw = vae.reconstruction_error_cosine(torch.tensor(X_dev, dtype=torch.float32), n_samples=4)
     else:
         vae_dev_raw = vae.anomaly_score(torch.tensor(X_dev, dtype=torch.float32), n_samples=8, beta=2.0)
-    vae_dev_scores = (vae_dev_raw - vae_mean) / vae_std
+    # vae_dev_scores = (vae_dev_raw - vae_mean) / vae_std
     ae_dev_raw = reconstruction_errors(ae, X_dev)
     ae_dev_scores = (ae_dev_raw - ae_mean) / ae_std
 
@@ -867,8 +958,8 @@ def main() -> None:
             train_model(a, X_ham_tr, val_data=X_ham_val, epochs=60, recon_loss_type=recon_loss_type)
 
             # scores
-            v_val = v.reconstruction_error(X_ham_val_t, n_samples=4)
-            v_test = v.reconstruction_error(X_test_t, n_samples=4)
+            v_val = v.reconstruction_error_cosine(X_ham_val_t, n_samples=4)
+            v_test = v.reconstruction_error_cosine(X_test_t, n_samples=4)
             a_val = reconstruction_errors(a, X_ham_val)
             a_test = reconstruction_errors(a, X_test)
 
@@ -877,7 +968,7 @@ def main() -> None:
             am, as_ = float(a_val.mean()), float(a_val.std() + 1e-9)
             a_test_s = (a_test - am) / as_
 
-            v_dev = v.reconstruction_error(torch.tensor(X_dev, dtype=torch.float32), n_samples=4)
+            v_dev = v.reconstruction_error_cosine(torch.tensor(X_dev, dtype=torch.float32), n_samples=4)
             v_dev_s = (v_dev - vm) / vs
             a_dev = reconstruction_errors(a, X_dev)
             a_dev_s = (a_dev - am) / as_
@@ -934,6 +1025,9 @@ def main() -> None:
     output_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
     print(json.dumps(summary, indent=2))
+
+    visualize_bottleneck(vae, X_test, y_test, latent_dim)
+    
     print(f"\nWrote {output_path}")
 
 

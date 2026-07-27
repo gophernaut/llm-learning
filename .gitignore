@@ -2,3 +2,4 @@ venv/
 vae-spam-detector/__pycache__/
 vae-spam-detector/medium-vae-spam-detector.md
 IMPROVEMENTS.md
+bottleneck_pca.png

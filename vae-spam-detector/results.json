@@ -9,82 +9,82 @@
   "threshold_selection": "PURE MAX F1 (no FPR cap)",
   "feature_mode": "embeddings",
   "embedding_model": "all-mpnet-base-v2",
-  "vae_threshold": 2.3310296535491943,
-  "ae_threshold": 2.5227444171905518,
+  "vae_threshold": 2.6923441886901855,
+  "ae_threshold": 2.1136224269866943,
   "pure_max_f1_mode": true,
-  "mean_error_ratio_spam_over_ham": 207.22,
+  "mean_error_ratio_spam_over_ham": 705.12,
   "architecture_sweep": [
     {
       "hidden": 512,
       "latent": 128,
-      "vae_f1": 0.8692,
-      "vae_recall": 0.7943,
-      "vae_fpr": 0.0207,
-      "ae_f1": 0.8638,
-      "ae_recall": 0.7793,
-      "ae_fpr": 0.0155
+      "vae_f1": 0.706,
+      "vae_recall": 0.8294,
+      "vae_fpr": 0.3219,
+      "ae_f1": 0.877,
+      "ae_recall": 0.811,
+      "ae_fpr": 0.0238
     },
     {
       "hidden": 768,
       "latent": 256,
-      "vae_f1": 0.882,
-      "vae_recall": 0.8311,
-      "vae_fpr": 0.0331,
-      "ae_f1": 0.8763,
-      "ae_recall": 0.7993,
-      "ae_fpr": 0.0155
+      "vae_f1": 0.601,
+      "vae_recall": 0.9799,
+      "vae_fpr": 0.793,
+      "ae_f1": 0.8734,
+      "ae_recall": 0.796,
+      "ae_fpr": 0.0166
     },
     {
       "hidden": 512,
       "latent": 64,
-      "vae_f1": 0.8654,
-      "vae_recall": 0.7793,
-      "vae_fpr": 0.0135,
-      "ae_f1": 0.8726,
-      "ae_recall": 0.8077,
-      "ae_fpr": 0.0269
+      "vae_f1": 0.723,
+      "vae_recall": 0.8662,
+      "vae_fpr": 0.3282,
+      "ae_f1": 0.8789,
+      "ae_recall": 0.8378,
+      "ae_fpr": 0.0424
     },
     {
       "hidden": 384,
       "latent": 128,
-      "vae_f1": 0.8784,
-      "vae_recall": 0.8094,
-      "vae_fpr": 0.0207,
-      "ae_f1": 0.8848,
-      "ae_recall": 0.8411,
-      "ae_fpr": 0.0373
+      "vae_f1": 0.7779,
+      "vae_recall": 0.8612,
+      "vae_fpr": 0.2184,
+      "ae_f1": 0.8714,
+      "ae_recall": 0.7876,
+      "ae_fpr": 0.0124
     },
     {
       "hidden": 256,
       "latent": 32,
-      "vae_f1": 0.8883,
-      "vae_recall": 0.8311,
-      "vae_fpr": 0.0248,
-      "ae_f1": 0.8748,
-      "ae_recall": 0.7943,
+      "vae_f1": 0.771,
+      "vae_recall": 0.6589,
+      "vae_fpr": 0.0311,
+      "ae_f1": 0.8779,
+      "ae_recall": 0.7993,
       "ae_fpr": 0.0135
     }
   ],
   "metrics": [
     {
       "name": "Ham-only VAE",
-      "accuracy": 0.9104859335038363,
-      "precision": 0.9635627530364372,
-      "recall": 0.7959866220735786,
-      "f1": 0.8717948717948718,
-      "roc_auc": 0.9583705519433308,
-      "ham_false_positive_rate": 0.018633540372670808,
-      "spam_recall": 0.7959866220735786
+      "accuracy": 0.9034526854219949,
+      "precision": 0.9496981891348089,
+      "recall": 0.7892976588628763,
+      "f1": 0.8621004566210045,
+      "roc_auc": 0.9454548287251501,
+      "ham_false_positive_rate": 0.025879917184265012,
+      "spam_recall": 0.7892976588628763
     },
     {
       "name": "Ham-only autoencoder",
-      "accuracy": 0.9053708439897699,
-      "precision": 0.9746835443037974,
-      "recall": 0.7725752508361204,
-      "f1": 0.8619402985074627,
-      "roc_auc": 0.9611593510459294,
-      "ham_false_positive_rate": 0.012422360248447204,
-      "spam_recall": 0.7725752508361204
+      "accuracy": 0.9181585677749361,
+      "precision": 0.9501915708812261,
+      "recall": 0.8294314381270903,
+      "f1": 0.8857142857142857,
+      "roc_auc": 0.9624126660988666,
+      "ham_false_positive_rate": 0.026915113871635612,
+      "spam_recall": 0.8294314381270903
     },
     {
       "name": "Logistic regression (supervised)",
@@ -100,23 +100,23 @@
   "examples": [
     {
       "label": "SPAM",
-      "error": 33.62556457519531,
+      "error": 53.70812225341797,
       "text": "+449071512431 URGENT! This is the 2nd attempt to contact U!U have WON \u00a31..."
     },
     {
       "label": "SPAM",
-      "error": 32.367305755615234,
-      "text": "PRIVATE! Your 2003 Account Statement for 07808247860 shows 800 un-redeem..."
+      "error": 48.55158233642578,
+      "text": "U\u2019ve Bin Awarded \u00a350 to Play 4 Instant Cash. Call 08715203028 To Claim. ..."
     },
     {
       "label": "HAM",
-      "error": -3.4185051918029785,
+      "error": -5.132938861846924,
       "text": "Sorry, I'll call later"
     },
     {
       "label": "HAM",
-      "error": -3.255338668823242,
-      "text": "I cant pick the phone right now. Pls send a message"
+      "error": -4.265679836273193,
+      "text": "Good morning, my Love ... I go to sleep now and wish you a great day ful..."
     }
   ]
 }
