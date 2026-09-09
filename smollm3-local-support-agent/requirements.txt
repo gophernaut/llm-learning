@@ -1,0 +1,4 @@
+transformers>=4.53.0
+torch>=2.3.0
+accelerate>=0.30.0
+mlx-lm
