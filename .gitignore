@@ -1,5 +1,8 @@
+.DS_Store
 venv/
 vae-spam-detector/__pycache__/
 vae-spam-detector/medium-vae-spam-detector.md
+vae-spam-detector/medium-vae-spam-detector-v1.md
+vae-spam-detector/suggested_articles.md
 IMPROVEMENTS.md
 bottleneck_pca.png
