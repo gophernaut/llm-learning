@@ -1,0 +1,27 @@
+{
+  "case": "slowmessage",
+  "passed": true,
+  "pass_attempt": 2,
+  "attempts": [
+    {
+      "attempt": 1,
+      "passed": false,
+      "stdout": "FAIL\texample.com/slowmessage [build failed]\nFAIL\n",
+      "stderr": "# example.com/slowmessage [example.com/slowmessage.test]\n./slowmessage_test.go:8:15: undefined: time\n./slowmessage_test.go:10:3: undefined: time\n",
+      "seconds": 9.7,
+      "new_tokens": 99,
+      "go": "package slowmessage\n\nimport (\n\t\"testing\"\n)\n\nfunc TestDo(t *testing.T) {\n\tthreshold := time.Millisecond * 100\n\tsf := func() error {\n\t\ttime.Sleep(threshold)\n\t\treturn nil\n\t}\n\tcb := func() {}\n\n\terr := Do(threshold, sf, cb)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n}",
+      "raw": "// Copyright (c) HashiCorp, Inc.\n// SPDX-License-Identifier: BUSL-1.1\n\npackage slowmessage\n\nimport (\n\t\"testing\"\n)\n\nfunc TestDo(t *testing.T) {\n\tthreshold := time.Millisecond * 100\n\tsf := func() error {\n\t\ttime.Sleep(threshold)\n\t\treturn nil\n\t}\n\tcb := func() {}\n\n\terr := Do(threshold, sf, cb)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n}\n"
+    },
+    {
+      "attempt": 2,
+      "passed": true,
+      "stdout": "ok  \texample.com/slowmessage\t0.477s\n",
+      "stderr": "",
+      "seconds": 9.5,
+      "new_tokens": 101,
+      "go": "package slowmessage\n\nimport (\n\t\"testing\"\n\t\"time\"\n)\n\nfunc TestDo(t *testing.T) {\n\tthreshold := time.Millisecond * 100\n\tsf := func() error {\n\t\ttime.Sleep(threshold)\n\t\treturn nil\n\t}\n\tcb := func() {}\n\n\terr := Do(threshold, sf, cb)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n}",
+      "raw": "// Copyright (c) HashiCorp, Inc.\n// SPDX-License-Identifier: BUSL-1.1\n\npackage slowmessage\n\nimport (\n\t\"testing\"\n\t\"time\"\n)\n\nfunc TestDo(t *testing.T) {\n\tthreshold := time.Millisecond * 100\n\tsf := func() error {\n\t\ttime.Sleep(threshold)\n\t\treturn nil\n\t}\n\tcb := func() {}\n\n\terr := Do(threshold, sf, cb)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "case": "slowmessage",
+  "passed": false,
+  "pass_attempt": null,
+  "attempts": [
+    {
+      "attempt": 1,
+      "passed": false,
+      "stdout": "FAIL\texample.com/slowmessage [setup failed]\nFAIL\n",
+      "stderr": "# example.com/slowmessage\nslowmessage_test.go:12:27: expected 'IDENT', found 'func'\n",
+      "seconds": 19.8,
+      "new_tokens": 198,
+      "go": "package slowmessage\n\nimport (\n\t\"testing\"\n\t\"time\"\n)\n\ntype slowFuncForTest struct {\n\terr error\n}\n\nfunc (sf slowFuncForTest) func() error {\n\treturn sf.err\n}\n\nfunc TestDo(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = ErrSlow\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != ErrSlow {\n\t\tt.Errorf(\"Expected %v, got %v\", ErrSlow, err)\n\t}\n}\n\nfunc TestDoTimeout(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = nil\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != nil {\n\t\tt.Errorf(\"Expected nil, got %v\", err)\n\t}\n}",
+      "raw": "// Copyright (c) HashiCorp, Inc.\n// SPDX-License-Identifier: BUSL-1.1\n\npackage slowmessage\n\nimport (\n\t\"testing\"\n\t\"time\"\n)\n\ntype slowFuncForTest struct {\n\terr error\n}\n\nfunc (sf slowFuncForTest) func() error {\n\treturn sf.err\n}\n\nfunc TestDo(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = ErrSlow\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != ErrSlow {\n\t\tt.Errorf(\"Expected %v, got %v\", ErrSlow, err)\n\t}\n}\n\nfunc TestDoTimeout(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = nil\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != nil {\n\t\tt.Errorf(\"Expected nil, got %v\", err)\n\t}\n}\n"
+    },
+    {
+      "attempt": 2,
+      "passed": false,
+      "stdout": "FAIL\texample.com/slowmessage [setup failed]\nFAIL\n",
+      "stderr": "# example.com/slowmessage\nslowmessage_test.go:12:27: expected 'IDENT', found 'func'\n",
+      "seconds": 19.9,
+      "new_tokens": 198,
+      "go": "package slowmessage\n\nimport (\n\t\"testing\"\n\t\"time\"\n)\n\ntype slowFuncForTest struct {\n\terr error\n}\n\nfunc (sf slowFuncForTest) func() error {\n\treturn sf.err\n}\n\nfunc TestDo(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = ErrSlow\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != ErrSlow {\n\t\tt.Errorf(\"Expected %v, got %v\", ErrSlow, err)\n\t}\n}\n\nfunc TestDoTimeout(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = nil\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != nil {\n\t\tt.Errorf(\"Expected nil, got %v\", err)\n\t}\n}",
+      "raw": "// Copyright (c) HashiCorp, Inc.\n// SPDX-License-Identifier: BUSL-1.1\n\npackage slowmessage\n\nimport (\n\t\"testing\"\n\t\"time\"\n)\n\ntype slowFuncForTest struct {\n\terr error\n}\n\nfunc (sf slowFuncForTest) func() error {\n\treturn sf.err\n}\n\nfunc TestDo(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = ErrSlow\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != ErrSlow {\n\t\tt.Errorf(\"Expected %v, got %v\", ErrSlow, err)\n\t}\n}\n\nfunc TestDoTimeout(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = nil\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != nil {\n\t\tt.Errorf(\"Expected nil, got %v\", err)\n\t}\n}\n"
+    },
+    {
+      "attempt": 3,
+      "passed": false,
+      "stdout": "FAIL\texample.com/slowmessage [setup failed]\nFAIL\n",
+      "stderr": "# example.com/slowmessage\nslowmessage_test.go:12:27: expected 'IDENT', found 'func'\n",
+      "seconds": 20.5,
+      "new_tokens": 198,
+      "go": "package slowmessage\n\nimport (\n\t\"testing\"\n\t\"time\"\n)\n\ntype slowFuncForTest struct {\n\terr error\n}\n\nfunc (sf slowFuncForTest) func() error {\n\treturn sf.err\n}\n\nfunc TestDo(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = ErrSlow\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != ErrSlow {\n\t\tt.Errorf(\"Expected %v, got %v\", ErrSlow, err)\n\t}\n}\n\nfunc TestDoTimeout(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = nil\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != nil {\n\t\tt.Errorf(\"Expected nil, got %v\", err)\n\t}\n}",
+      "raw": "// Copyright (c) HashiCorp, Inc.\n// SPDX-License-Identifier: BUSL-1.1\n\npackage slowmessage\n\nimport (\n\t\"testing\"\n\t\"time\"\n)\n\ntype slowFuncForTest struct {\n\terr error\n}\n\nfunc (sf slowFuncForTest) func() error {\n\treturn sf.err\n}\n\nfunc TestDo(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = ErrSlow\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != ErrSlow {\n\t\tt.Errorf(\"Expected %v, got %v\", ErrSlow, err)\n\t}\n}\n\nfunc TestDoTimeout(t *testing.T) {\n\tvar sf slowFuncForTest\n\tsf.err = nil\n\tvar cb CallbackFunc\n\tcb = func() {}\n\n\terr := Do(time.Second, sf.func(), cb)\n\tif err != nil {\n\t\tt.Errorf(\"Expected nil, got %v\", err)\n\t}\n}\n"
+    }
+  ]
+}

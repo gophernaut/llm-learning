@@ -1,0 +1,78 @@
+{
+  "tag": "practice",
+  "max_attempts": 3,
+  "passed": 1,
+  "total": 14,
+  "cases": [
+    {
+      "case": "iotest_writer",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "slowmessage",
+      "passed": true,
+      "pass_attempt": 2
+    },
+    {
+      "case": "k8s_allocator_utils",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "stdlib_errors",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "stdlib_http_mapping",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "stdlib_cover_html",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "stdlib_zstd_window",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "k8s_mux_discovery",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "stdlib_testing_allocs",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "k8s_webhook_resolver",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "k8s_configz",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "k8s_valuefuzz",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "tidb_hack",
+      "passed": false,
+      "pass_attempt": null
+    },
+    {
+      "case": "gin_bytesconv",
+      "passed": false,
+      "pass_attempt": null
+    }
+  ]
+}

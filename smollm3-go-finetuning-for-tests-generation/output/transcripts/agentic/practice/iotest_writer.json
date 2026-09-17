@@ -1,0 +1,37 @@
+{
+  "case": "iotest_writer",
+  "passed": false,
+  "pass_attempt": null,
+  "attempts": [
+    {
+      "attempt": 1,
+      "passed": false,
+      "stdout": "FAIL\texample.com/iotest [build failed]\nFAIL\n",
+      "stderr": "# example.com/iotest [example.com/iotest.test]\n./writer_test.go:9:7: undefined: io\n./writer_test.go:18:22: cannot use err.Error() (value of type string) as []byte value in argument to bytes.Contains\n./writer_test.go:18:35: cannot use \"Truncated\" (untyped string constant) as []byte value in argument to bytes.Contains\n",
+      "seconds": 15.9,
+      "new_tokens": 174,
+      "go": "package iotest\n\nimport (\n\t\"bytes\"\n\t\"testing\"\n)\n\nfunc TestTruncateWriter(t *testing.T) {\n\tw := io.NopCloser(bytes.NewBuffer([]byte(\"abcdefgh\")))\n\ttw := TruncateWriter(w, 5)\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err == nil {\n\t\tt.Error(\"expected error\")\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tif !bytes.Contains(err.Error(), \"Truncated\") {\n\t\t\tt.Error(err)\n\t\t}\n\t}\n}",
+      "raw": "// Copyright 2009 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage iotest\n\nimport (\n\t\"bytes\"\n\t\"testing\"\n)\n\nfunc TestTruncateWriter(t *testing.T) {\n\tw := io.NopCloser(bytes.NewBuffer([]byte(\"abcdefgh\")))\n\ttw := TruncateWriter(w, 5)\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err == nil {\n\t\tt.Error(\"expected error\")\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tif !bytes.Contains(err.Error(), \"Truncated\") {\n\t\t\tt.Error(err)\n\t\t}\n\t}\n}\n"
+    },
+    {
+      "attempt": 2,
+      "passed": false,
+      "stdout": "FAIL\texample.com/iotest [build failed]\nFAIL\n",
+      "stderr": "# example.com/iotest [example.com/iotest.test]\n./writer_test.go:9:7: undefined: io\n./writer_test.go:18:22: cannot use err.Error() (value of type string) as []byte value in argument to bytes.Contains\n./writer_test.go:18:35: cannot use \"Truncated\" (untyped string constant) as []byte value in argument to bytes.Contains\n",
+      "seconds": 17.5,
+      "new_tokens": 174,
+      "go": "package iotest\n\nimport (\n\t\"bytes\"\n\t\"testing\"\n)\n\nfunc TestTruncateWriter(t *testing.T) {\n\tw := io.NopCloser(bytes.NewBuffer([]byte(\"abcdefgh\")))\n\ttw := TruncateWriter(w, 5)\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err == nil {\n\t\tt.Error(\"expected error\")\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tif !bytes.Contains(err.Error(), \"Truncated\") {\n\t\t\tt.Error(err)\n\t\t}\n\t}\n}",
+      "raw": "// Copyright 2009 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage iotest\n\nimport (\n\t\"bytes\"\n\t\"testing\"\n)\n\nfunc TestTruncateWriter(t *testing.T) {\n\tw := io.NopCloser(bytes.NewBuffer([]byte(\"abcdefgh\")))\n\ttw := TruncateWriter(w, 5)\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err == nil {\n\t\tt.Error(\"expected error\")\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tif !bytes.Contains(err.Error(), \"Truncated\") {\n\t\t\tt.Error(err)\n\t\t}\n\t}\n}\n"
+    },
+    {
+      "attempt": 3,
+      "passed": false,
+      "stdout": "FAIL\texample.com/iotest [build failed]\nFAIL\n",
+      "stderr": "# example.com/iotest [example.com/iotest.test]\n./writer_test.go:9:7: undefined: io\n./writer_test.go:18:22: cannot use err.Error() (value of type string) as []byte value in argument to bytes.Contains\n./writer_test.go:18:35: cannot use \"Truncated\" (untyped string constant) as []byte value in argument to bytes.Contains\n",
+      "seconds": 17.8,
+      "new_tokens": 174,
+      "go": "package iotest\n\nimport (\n\t\"bytes\"\n\t\"testing\"\n)\n\nfunc TestTruncateWriter(t *testing.T) {\n\tw := io.NopCloser(bytes.NewBuffer([]byte(\"abcdefgh\")))\n\ttw := TruncateWriter(w, 5)\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err == nil {\n\t\tt.Error(\"expected error\")\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tif !bytes.Contains(err.Error(), \"Truncated\") {\n\t\t\tt.Error(err)\n\t\t}\n\t}\n}",
+      "raw": "// Copyright 2009 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage iotest\n\nimport (\n\t\"bytes\"\n\t\"testing\"\n)\n\nfunc TestTruncateWriter(t *testing.T) {\n\tw := io.NopCloser(bytes.NewBuffer([]byte(\"abcdefgh\")))\n\ttw := TruncateWriter(w, 5)\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err == nil {\n\t\tt.Error(\"expected error\")\n\t}\n\tif _, err := tw.Write([]byte(\"abcdefgh\")); err != nil {\n\t\tif !bytes.Contains(err.Error(), \"Truncated\") {\n\t\t\tt.Error(err)\n\t\t}\n\t}\n}\n"
+    }
+  ]
+}

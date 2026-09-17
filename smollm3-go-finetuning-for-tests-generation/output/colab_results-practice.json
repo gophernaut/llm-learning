@@ -1,0 +1,33 @@
+{
+  "profile": "practice",
+  "gpu": "Tesla T4",
+  "train_rows": 256,
+  "baseline": [
+    {
+      "case": "iotest_writer",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 28.2
+    },
+    {
+      "case": "slowmessage",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 34.9
+    }
+  ],
+  "after": [
+    {
+      "case": "iotest_writer",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 51.5
+    },
+    {
+      "case": "slowmessage",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 50.1
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "profile": "full_short",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "train_rows": 907,
+  "baseline": [
+    {
+      "case": "iotest_writer",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 41.1
+    },
+    {
+      "case": "slowmessage",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 41.8
+    },
+    {
+      "case": "k8s_allocator_utils",
+      "gt_pass": true,
+      "gen_pass": true,
+      "seconds": 25.3
+    },
+    {
+      "case": "stdlib_errors",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 41.4
+    },
+    {
+      "case": "stdlib_http_mapping",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 42.0
+    },
+    {
+      "case": "stdlib_cover_html",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 19.6
+    },
+    {
+      "case": "stdlib_zstd_window",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 21.2
+    },
+    {
+      "case": "k8s_mux_discovery",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 36.1
+    },
+    {
+      "case": "stdlib_testing_allocs",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 41.8
+    },
+    {
+      "case": "k8s_webhook_resolver",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 26.8
+    },
+    {
+      "case": "k8s_configz",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 42.1
+    },
+    {
+      "case": "k8s_valuefuzz",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 42.3
+    },
+    {
+      "case": "tidb_hack",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 27.2
+    },
+    {
+      "case": "gin_bytesconv",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 41.8
+    }
+  ],
+  "after": [
+    {
+      "case": "iotest_writer",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 65.8
+    },
+    {
+      "case": "slowmessage",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 43.4
+    },
+    {
+      "case": "k8s_allocator_utils",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 54.7
+    },
+    {
+      "case": "stdlib_errors",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 95.9
+    },
+    {
+      "case": "stdlib_http_mapping",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 56.6
+    },
+    {
+      "case": "stdlib_cover_html",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 11.9
+    },
+    {
+      "case": "stdlib_zstd_window",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 97.0
+    },
+    {
+      "case": "k8s_mux_discovery",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 75.5
+    },
+    {
+      "case": "stdlib_testing_allocs",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 95.3
+    },
+    {
+      "case": "k8s_webhook_resolver",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 96.2
+    },
+    {
+      "case": "k8s_configz",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 96.2
+    },
+    {
+      "case": "k8s_valuefuzz",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 71.5
+    },
+    {
+      "case": "tidb_hack",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 95.7
+    },
+    {
+      "case": "gin_bytesconv",
+      "gt_pass": true,
+      "gen_pass": false,
+      "seconds": 49.5
+    }
+  ]
+}

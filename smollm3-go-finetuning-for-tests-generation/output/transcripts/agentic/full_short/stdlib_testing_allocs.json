@@ -1,0 +1,37 @@
+{
+  "case": "stdlib_testing_allocs",
+  "passed": false,
+  "pass_attempt": null,
+  "attempts": [
+    {
+      "attempt": 1,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case449 [build failed]\nFAIL\n",
+      "stderr": "# example.com/case449 [example.com/case449.test]\n./allocs_test.go:10:22: not enough arguments in call to b.Cleanup\n\thave ()\n\twant (func())\n./allocs_test.go:12:30: b.Called undefined (type *\"testing\".B has no field or method Called)\n./allocs_test.go:19:22: not enough arguments in call to b.Cleanup\n\thave ()\n\twant (func())\n./allocs_test.go:21:32: b.Called undefined (type *\"testing\".B has no field or method Called)\n",
+      "seconds": 16.5,
+      "new_tokens": 196,
+      "go": "package testing\n\nimport (\n\t\"testing\"\n)\n\nfunc BenchmarkAllocsPerRun(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.Cleanup() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(1, func() { b.Called() })\n\t})\n}\n\nfunc BenchmarkAllocsPerRun2(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.Cleanup() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(100, func() { b.Called() })\n\t})\n}",
+      "raw": "// Copyright 2013 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage testing\n\nimport (\n\t\"testing\"\n)\n\nfunc BenchmarkAllocsPerRun(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.Cleanup() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(1, func() { b.Called() })\n\t})\n}\n\nfunc BenchmarkAllocsPerRun2(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.Cleanup() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(100, func() { b.Called() })\n\t})\n}\n"
+    },
+    {
+      "attempt": 2,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case449 [build failed]\nFAIL\n",
+      "stderr": "# example.com/case449 [example.com/case449.test]\n./allocs_test.go:12:30: b.Called undefined (type *\"testing\".B has no field or method Called)\n./allocs_test.go:21:32: b.Called undefined (type *\"testing\".B has no field or method Called)\n",
+      "seconds": 17.4,
+      "new_tokens": 196,
+      "go": "package testing\n\nimport (\n\t\"testing\"\n)\n\nfunc BenchmarkAllocsPerRun(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.ResetTimer() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(1, func() { b.Called() })\n\t})\n}\n\nfunc BenchmarkAllocsPerRun2(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.ResetTimer() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(100, func() { b.Called() })\n\t})\n}",
+      "raw": "// Copyright 2013 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage testing\n\nimport (\n\t\"testing\"\n)\n\nfunc BenchmarkAllocsPerRun(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.ResetTimer() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(1, func() { b.Called() })\n\t})\n}\n\nfunc BenchmarkAllocsPerRun2(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.ResetTimer() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(100, func() { b.Called() })\n\t})\n}\n"
+    },
+    {
+      "attempt": 3,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case449 [build failed]\nFAIL\n",
+      "stderr": "# example.com/case449 [example.com/case449.test]\n./allocs_test.go:12:30: b.Called undefined (type *\"testing\".B has no field or method Called)\n./allocs_test.go:21:32: b.Called undefined (type *\"testing\".B has no field or method Called)\n",
+      "seconds": 18.4,
+      "new_tokens": 196,
+      "go": "package testing\n\nimport (\n\t\"testing\"\n)\n\nfunc BenchmarkAllocsPerRun(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.ResetTimer() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(1, func() { b.Called() })\n\t})\n}\n\nfunc BenchmarkAllocsPerRun2(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.ResetTimer() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(100, func() { b.Called() })\n\t})\n}",
+      "raw": "// Copyright 2013 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage testing\n\nimport (\n\t\"testing\"\n)\n\nfunc BenchmarkAllocsPerRun(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.ResetTimer() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(1, func() { b.Called() })\n\t})\n}\n\nfunc BenchmarkAllocsPerRun2(b *testing.B) {\n\tb.Run(\"func call\", func(b *testing.B) {\n\t\tb.SetBytes(int64(1 << 20))\n\t\tb.Cleanup(func() { b.ResetTimer() })\n\t\tb.ResetTimer()\n\t\tAllocsPerRun(100, func() { b.Called() })\n\t})\n}\n"
+    }
+  ]
+}

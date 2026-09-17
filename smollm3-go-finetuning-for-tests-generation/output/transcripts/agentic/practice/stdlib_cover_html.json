@@ -1,0 +1,37 @@
+{
+  "case": "stdlib_cover_html",
+  "passed": false,
+  "pass_attempt": null,
+  "attempts": [
+    {
+      "attempt": 1,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case258 [setup failed]\nFAIL\n",
+      "stderr": "# example.com/case258\nhtml_test.go:6:2: no required module provides package github.com/stretchr/testify/require; to add it:\n\tgo get github.com/stretchr/testify/require\n",
+      "seconds": 9.6,
+      "new_tokens": 114,
+      "go": "package html\n\nimport (\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestHTML(t *testing.T) {\n\tt.Run(\"f\", func(t *testing.T) {\n\t\tt.Run(\"empty select clause\", func(t *testing.T) {\n\t\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\t\tf()\n\t\t\t})\n\t\t})\n\t})\n\n\tt.Run(\"g\", func(t *testing.T) {\n\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\tg()\n\t\t})\n\t})\n}",
+      "raw": "package html\n\nimport (\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestHTML(t *testing.T) {\n\tt.Run(\"f\", func(t *testing.T) {\n\t\tt.Run(\"empty select clause\", func(t *testing.T) {\n\t\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\t\tf()\n\t\t\t})\n\t\t})\n\t})\n\n\tt.Run(\"g\", func(t *testing.T) {\n\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\tg()\n\t\t})\n\t})\n}\n"
+    },
+    {
+      "attempt": 2,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case258 [setup failed]\nFAIL\n",
+      "stderr": "# example.com/case258\nhtml_test.go:6:2: no required module provides package github.com/stretchr/testify/require; to add it:\n\tgo get github.com/stretchr/testify/require\n",
+      "seconds": 10.0,
+      "new_tokens": 114,
+      "go": "package html\n\nimport (\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestHTML(t *testing.T) {\n\tt.Run(\"f\", func(t *testing.T) {\n\t\tt.Run(\"empty select clause\", func(t *testing.T) {\n\t\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\t\tf()\n\t\t\t})\n\t\t})\n\t})\n\n\tt.Run(\"g\", func(t *testing.T) {\n\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\tg()\n\t\t})\n\t})\n}",
+      "raw": "package html\n\nimport (\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestHTML(t *testing.T) {\n\tt.Run(\"f\", func(t *testing.T) {\n\t\tt.Run(\"empty select clause\", func(t *testing.T) {\n\t\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\t\tf()\n\t\t\t})\n\t\t})\n\t})\n\n\tt.Run(\"g\", func(t *testing.T) {\n\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\tg()\n\t\t})\n\t})\n}\n"
+    },
+    {
+      "attempt": 3,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case258 [setup failed]\nFAIL\n",
+      "stderr": "# example.com/case258\nhtml_test.go:6:2: no required module provides package github.com/stretchr/testify/require; to add it:\n\tgo get github.com/stretchr/testify/require\n",
+      "seconds": 10.4,
+      "new_tokens": 114,
+      "go": "package html\n\nimport (\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestHTML(t *testing.T) {\n\tt.Run(\"f\", func(t *testing.T) {\n\t\tt.Run(\"empty select clause\", func(t *testing.T) {\n\t\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\t\tf()\n\t\t\t})\n\t\t})\n\t})\n\n\tt.Run(\"g\", func(t *testing.T) {\n\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\tg()\n\t\t})\n\t})\n}",
+      "raw": "package html\n\nimport (\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestHTML(t *testing.T) {\n\tt.Run(\"f\", func(t *testing.T) {\n\t\tt.Run(\"empty select clause\", func(t *testing.T) {\n\t\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\t\tf()\n\t\t\t})\n\t\t})\n\t})\n\n\tt.Run(\"g\", func(t *testing.T) {\n\t\tt.Run(\"no error\", func(t *testing.T) {\n\t\t\tg()\n\t\t})\n\t})\n}\n"
+    }
+  ]
+}

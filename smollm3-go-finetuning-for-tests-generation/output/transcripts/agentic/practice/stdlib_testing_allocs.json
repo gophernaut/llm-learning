@@ -1,0 +1,37 @@
+{
+  "case": "stdlib_testing_allocs",
+  "passed": false,
+  "pass_attempt": null,
+  "attempts": [
+    {
+      "attempt": 1,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case449 [build failed]\nFAIL\n",
+      "stderr": "# example.com/case449 [example.com/case449.test]\n./allocs_test.go:42:56: invalid operation: got != tt.expected (mismatched types float64 and int)\n",
+      "seconds": 25.8,
+      "new_tokens": 303,
+      "go": "package testing\n\nimport (\n\t\"testing\"\n)\n\nfunc TestAllocsPerRun(t *testing.T) {\n\ttests := []struct {\n\t\tname    string\n\t\truns     int\n\t\texpected int\n\t}{\n\t\t{\n\t\t\tname:    \"zero runs\",\n\t\t\truns:    0,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"zero allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"one allocation\",\n\t\t\truns:    100,\n\t\t\texpected: 1,\n\t\t},\n\t\t{\n\t\t\tname:    \"two allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 2,\n\t\t},\n\t\t{\n\t\t\tname:    \"three allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 3,\n\t\t},\n\t}\n\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tif got := AllocsPerRun(tt.runs, func() { }); got != tt.expected {\n\t\t\t\tt.Errorf(\"AllocsPerRun(%d, func()) = %d, want %d\", tt.runs, got, tt.expected)\n\t\t\t}\n\t\t})\n\t}\n}",
+      "raw": "// Copyright 2013 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage testing\n\nimport (\n\t\"testing\"\n)\n\nfunc TestAllocsPerRun(t *testing.T) {\n\ttests := []struct {\n\t\tname    string\n\t\truns     int\n\t\texpected int\n\t}{\n\t\t{\n\t\t\tname:    \"zero runs\",\n\t\t\truns:    0,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"zero allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"one allocation\",\n\t\t\truns:    100,\n\t\t\texpected: 1,\n\t\t},\n\t\t{\n\t\t\tname:    \"two allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 2,\n\t\t},\n\t\t{\n\t\t\tname:    \"three allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 3,\n\t\t},\n\t}\n\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tif got := AllocsPerRun(tt.runs, func() { }); got != tt.expected {\n\t\t\t\tt.Errorf(\"AllocsPerRun(%d, func()) = %d, want %d\", tt.runs, got, tt.expected)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+    },
+    {
+      "attempt": 2,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case449 [build failed]\nFAIL\n",
+      "stderr": "# example.com/case449 [example.com/case449.test]\n./allocs_test.go:42:56: invalid operation: got != tt.expected (mismatched types float64 and int)\n",
+      "seconds": 28.5,
+      "new_tokens": 303,
+      "go": "package testing\n\nimport (\n\t\"testing\"\n)\n\nfunc TestAllocsPerRun(t *testing.T) {\n\ttests := []struct {\n\t\tname    string\n\t\truns     int\n\t\texpected int\n\t}{\n\t\t{\n\t\t\tname:    \"zero runs\",\n\t\t\truns:    0,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"zero allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"one allocation\",\n\t\t\truns:    100,\n\t\t\texpected: 1,\n\t\t},\n\t\t{\n\t\t\tname:    \"two allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 2,\n\t\t},\n\t\t{\n\t\t\tname:    \"three allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 3,\n\t\t},\n\t}\n\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tif got := AllocsPerRun(tt.runs, func() { }); got != tt.expected {\n\t\t\t\tt.Errorf(\"AllocsPerRun(%d, func()) = %d, want %d\", tt.runs, got, tt.expected)\n\t\t\t}\n\t\t})\n\t}\n}",
+      "raw": "// Copyright 2013 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage testing\n\nimport (\n\t\"testing\"\n)\n\nfunc TestAllocsPerRun(t *testing.T) {\n\ttests := []struct {\n\t\tname    string\n\t\truns     int\n\t\texpected int\n\t}{\n\t\t{\n\t\t\tname:    \"zero runs\",\n\t\t\truns:    0,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"zero allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"one allocation\",\n\t\t\truns:    100,\n\t\t\texpected: 1,\n\t\t},\n\t\t{\n\t\t\tname:    \"two allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 2,\n\t\t},\n\t\t{\n\t\t\tname:    \"three allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 3,\n\t\t},\n\t}\n\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tif got := AllocsPerRun(tt.runs, func() { }); got != tt.expected {\n\t\t\t\tt.Errorf(\"AllocsPerRun(%d, func()) = %d, want %d\", tt.runs, got, tt.expected)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+    },
+    {
+      "attempt": 3,
+      "passed": false,
+      "stdout": "FAIL\texample.com/case449 [build failed]\nFAIL\n",
+      "stderr": "# example.com/case449 [example.com/case449.test]\n./allocs_test.go:42:56: invalid operation: got != tt.expected (mismatched types float64 and int)\n",
+      "seconds": 30.7,
+      "new_tokens": 303,
+      "go": "package testing\n\nimport (\n\t\"testing\"\n)\n\nfunc TestAllocsPerRun(t *testing.T) {\n\ttests := []struct {\n\t\tname    string\n\t\truns     int\n\t\texpected int\n\t}{\n\t\t{\n\t\t\tname:    \"zero runs\",\n\t\t\truns:    0,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"zero allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"one allocation\",\n\t\t\truns:    100,\n\t\t\texpected: 1,\n\t\t},\n\t\t{\n\t\t\tname:    \"two allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 2,\n\t\t},\n\t\t{\n\t\t\tname:    \"three allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 3,\n\t\t},\n\t}\n\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tif got := AllocsPerRun(tt.runs, func() { }); got != tt.expected {\n\t\t\t\tt.Errorf(\"AllocsPerRun(%d, func()) = %d, want %d\", tt.runs, got, tt.expected)\n\t\t\t}\n\t\t})\n\t}\n}",
+      "raw": "// Copyright 2013 The Go Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\npackage testing\n\nimport (\n\t\"testing\"\n)\n\nfunc TestAllocsPerRun(t *testing.T) {\n\ttests := []struct {\n\t\tname    string\n\t\truns     int\n\t\texpected int\n\t}{\n\t\t{\n\t\t\tname:    \"zero runs\",\n\t\t\truns:    0,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"zero allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 0,\n\t\t},\n\t\t{\n\t\t\tname:    \"one allocation\",\n\t\t\truns:    100,\n\t\t\texpected: 1,\n\t\t},\n\t\t{\n\t\t\tname:    \"two allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 2,\n\t\t},\n\t\t{\n\t\t\tname:    \"three allocations\",\n\t\t\truns:    100,\n\t\t\texpected: 3,\n\t\t},\n\t}\n\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tif got := AllocsPerRun(tt.runs, func() { }); got != tt.expected {\n\t\t\t\tt.Errorf(\"AllocsPerRun(%d, func()) = %d, want %d\", tt.runs, got, tt.expected)\n\t\t\t}\n\t\t})\n\t}\n}\n"
+    }
+  ]
+}
