@@ -1,0 +1,8 @@
+[PAGERDUTY] SEV-1 checkout-api error rate
+service: checkout-api
+environment: production
+slo: error_rate < 1% over 5m
+observed: error_rate=18%  (5xx)
+window: 2026-09-17T14:27Z to 14:32Z
+symptom: POST /pay returning 502
+note: checkout itself looks up; errors mention an upstream

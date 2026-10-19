@@ -1,0 +1,8 @@
+[SLO] search-api high latency
+service: search-api
+environment: production
+slo: p99 < 300ms
+observed: p99=2410ms
+error_rate: 3%
+pods: 2/2 ready
+note: origin fallback suspected; check cache/redis

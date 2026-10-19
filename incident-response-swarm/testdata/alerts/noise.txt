@@ -1,0 +1,6 @@
+[INFO] frontend CPU 50%
+service: frontend
+environment: production
+observed: cpu=50%  memory=38%  error_rate=0.2%  p99=120ms
+replicas: 3/3 ready
+note: this is an informational capacity ping, not a page

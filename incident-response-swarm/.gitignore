@@ -1,0 +1,3 @@
+# API keys
+.env.local
+.env*

@@ -1,0 +1,8 @@
+[PROMETHEUS] payments-svc memory pressure
+service: payments-svc
+environment: production
+alert: PodMemoryAlmostOOM
+observed: memory 512Mi/512Mi (99%)
+pods: payments-svc-1, payments-svc-2, payments-svc-3
+deploy: gcr.io/shop/payments:1.14.0 rolled out 18 minutes ago
+restart_count: 11
