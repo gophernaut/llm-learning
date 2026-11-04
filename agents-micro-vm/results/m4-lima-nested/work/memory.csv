@@ -1,0 +1,4 @@
+phase,fork_n,rep,memavailable_delta_per_vm_kib
+fork_staggered,16,0,72850
+fork_staggered,16,1,58893
+fork_staggered,16,2,62009

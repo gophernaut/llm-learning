@@ -1,0 +1,10 @@
+phase,fork_n,rep,memavailable_delta_per_vm_kib
+fork,1,0,-4
+fork,1,1,-4
+fork,1,2,-152
+fork,4,0,749
+fork,4,1,-4
+fork,4,2,59
+fork,8,0,663
+fork,8,1,563
+fork,8,2,598

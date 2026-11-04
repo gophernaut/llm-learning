@@ -1,0 +1,5 @@
+phase,fork_n,samples,p50_ms,p90_ms,p99_ms,min_ms,max_ms,mean_rss_kib,mean_pss_kib,mean_private_kib
+snapshot,0,1,217.172,217.172,217.172,217.172,217.172,,,
+fork_staggered_vmm,64,192,26.056,35.421,50.097,16.914,61.529,,,
+fork_staggered,64,192,7358.261,85459.113,132774.688,1735.090,141192.159,22191,2828,2509
+fork_staggered_batch,64,3,193233.202,193723.858,193723.858,183971.385,193723.858,,,

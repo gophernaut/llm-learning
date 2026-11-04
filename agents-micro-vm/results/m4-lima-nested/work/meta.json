@@ -1,0 +1,24 @@
+{
+  "cpu": "arm64",
+  "drop_caches": false,
+  "firecracker": "Firecracker v1.17.0",
+  "fork_ns": [
+    16
+  ],
+  "fork_parallel": 8,
+  "fork_reps": 3,
+  "go": "go1.26.0",
+  "guest_mem_mib": 512,
+  "guest_vcpus": 1,
+  "host_kernel": "6.8.0-142-generic",
+  "host_mem_total": "14280528 kB",
+  "iters": 50,
+  "kernel": "/home/angalor.guest/agents-micro-vm/images/vmlinux",
+  "rootfs": "/home/angalor.guest/agents-micro-vm/images/rootfs.ext4",
+  "rootfs_mode": "block",
+  "settle": "2s",
+  "snapshot_mem_size": 536870912,
+  "time": "2026-11-04T16:52:26Z",
+  "warm_cmd": "python3 -c 'import json, ssl, sqlite3, http.client'",
+  "work_cmd": "python3 -c 'b=bytearray(64\u003c\u003c20); b[::4096]=bytes(len(b)//4096)'"
+}
