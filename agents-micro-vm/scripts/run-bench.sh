@@ -18,6 +18,11 @@ ITERS="${ITERS:-200}"
 # boots and restores alike. Keep FORKS below ~1.5x the host's vCPUs there,
 # e.g. FORKS=1,4,8. The density step below starts at most 8 at a time.
 FORKS="${FORKS:-1,4,16,64}"
+# Rootfs modes to benchmark. pmem needs the host CPU to address the guest
+# physical range Firecracker maps it at; on x86_64 hosts with 39-bit physical
+# addresses (many desktop Intel CPUs) KVM rejects it with EINVAL. Check with
+# grep -m1 'address sizes' /proc/cpuinfo, and use MODES=block there.
+MODES="${MODES:-block pmem}"
 WARM="python3 -c 'import json, ssl, sqlite3, http.client'"
 # Synthetic agent work: write one byte into every page of 64 MiB, so each
 # fork dirties ~64 MiB of its copy-on-write memory.
@@ -36,12 +41,16 @@ echo "== 1/5 block rootfs: cold, restore, fork, pause, hibernate"
 bin/bench "${common[@]}" -run-dir "$RUN_DIR" -rootfs-mode block -iters "$ITERS" -forks "$FORKS" -fork-reps 3 \
   -snap snapshots/bench-block -out "$OUT/block" > "$OUT/block.log"
 
-echo "== 2/5 pmem + DAX rootfs: same phases"
-bin/bench "${common[@]}" -run-dir "$RUN_DIR" -rootfs-mode pmem -iters "$ITERS" -forks "$FORKS" -fork-reps 3 \
-  -snap snapshots/bench-pmem -out "$OUT/pmem" > "$OUT/pmem.log"
+if [[ " $MODES " == *" pmem "* ]]; then
+  echo "== 2/5 pmem + DAX rootfs: same phases"
+  bin/bench "${common[@]}" -run-dir "$RUN_DIR" -rootfs-mode pmem -iters "$ITERS" -forks "$FORKS" -fork-reps 3 \
+    -snap snapshots/bench-pmem -out "$OUT/pmem" > "$OUT/pmem.log"
+else
+  echo "== 2/5 pmem + DAX rootfs: skipped (MODES=$MODES)"
+fi
 
-echo "== 3/5 density: 64 forks, at most 8 starting at once (block, then pmem)"
-for mode in block pmem; do
+echo "== 3/5 density: 64 forks, at most 8 starting at once ($MODES)"
+for mode in $MODES; do
   bin/bench "${common[@]}" -run-dir "$RUN_DIR" -rootfs-mode $mode -phases fork -forks 64 -fork-reps 3 -fork-parallel 8 \
     -snap snapshots/bench-$mode -out "$OUT/density-$mode" > "$OUT/density-$mode.log"
 done
@@ -55,4 +64,4 @@ sudo bin/bench "${common[@]}" -run-dir "${RUN_DIR}-root" -rootfs-mode block -pha
   -snap "${RUN_DIR}-root/snap" -out "$OUT/coldcache" > "$OUT/coldcache.log"
 sudo chown -R "$(id -u):$(id -g)" "$OUT"
 
-echo "done: $OUT/{block,pmem,density-block,density-pmem,work,coldcache}/{raw,summary,memory}.csv + meta.json"
+echo "done: $OUT/{block,density-block,work,coldcache$([[ " $MODES " == *" pmem "* ]] && echo ,pmem,density-pmem)}/{raw,summary,memory}.csv + meta.json"
