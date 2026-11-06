@@ -98,7 +98,11 @@ Credentialed hosts must use `http://` from the guest. The proxy refuses `CONNECT
 The suite used for the article, with identical flags on every host so results compare:
 
 ```bash
-./scripts/run-bench.sh my-host          # results/my-host/{block,pmem,work,coldcache}/
+./scripts/run-bench.sh my-host          # results/i7-6700k-bare-metal/{block,pmem,density-*,work,coldcache}/
+MODES=block ./scripts/run-bench.sh my-host   # skip virtio-pmem (see below)
+
+# Charts for the article from two result sets -> article/img/
+uv run --with matplotlib scripts/make-charts.py i7-6700k-bare-metal m4-lima-nested
 ```
 
 It runs:
@@ -107,7 +111,7 @@ It runs:
 3. forks of 16 after each one writes 64 MiB, to show copy-on-write savings eroding;
 4. restore with the host page cache dropped (`sudo`).
 
-`ITERS` (default 200) and `FORKS` env vars override the defaults. With a 512 MiB guest, the 64-fork batches want about 4 GiB of free host RAM, and the suite takes 20–40 minutes depending on the host.
+`ITERS` (default 200), `FORKS` and `MODES` (default `block pmem`) env vars override the defaults. virtio-pmem needs a CPU with more than 39 physical address bits (`grep -m1 'address sizes' /proc/cpuinfo`). On many desktop Intel CPUs, KVM rejects the pmem region with `Invalid argument (os error 22)`, so use `MODES=block` there. With a 512 MiB guest, the 64-fork batches want about 4 GiB of free host RAM, and the suite takes 20–40 minutes depending on the host.
 
 Running `bench` by hand:
 

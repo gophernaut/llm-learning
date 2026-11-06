@@ -1,0 +1,27 @@
+{
+  "cpu": "Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz",
+  "drop_caches": false,
+  "firecracker": "Firecracker v1.17.0",
+  "fork_ns": [
+    1,
+    4,
+    16,
+    64
+  ],
+  "fork_parallel": 0,
+  "fork_reps": 3,
+  "go": "go1.26.0",
+  "guest_mem_mib": 512,
+  "guest_vcpus": 1,
+  "host_kernel": "6.14.0-37-generic",
+  "host_mem_total": "49292564 kB",
+  "iters": 200,
+  "kernel": "images/vmlinux",
+  "rootfs": "images/rootfs.ext4",
+  "rootfs_mode": "block",
+  "settle": "2s",
+  "snapshot_mem_size": 536870912,
+  "time": "2026-11-05T18:53:09Z",
+  "warm_cmd": "python3 -c 'import json, ssl, sqlite3, http.client'",
+  "work_cmd": ""
+}
